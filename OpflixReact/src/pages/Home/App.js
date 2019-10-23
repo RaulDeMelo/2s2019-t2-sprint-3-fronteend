@@ -5,7 +5,7 @@ import '../../assets/css/stylesheet.css';
 
 function App(){
   return(
-    <div className="App">
+    <div>
         <Nav/>
         <img src={Logo} alt="Logo da Opflix"/>
         <p className="font_opflix">Sua plataforma de lançamentos favorita.</p>

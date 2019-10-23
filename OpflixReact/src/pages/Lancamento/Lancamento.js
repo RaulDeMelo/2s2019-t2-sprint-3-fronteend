@@ -1,9 +1,7 @@
 import Axios from 'axios';
 import React,{Component} from 'react';
 import Nav from '../../components/Nav/Nav';
-import '../../assets/css/stylesheet.css';
-import Fonte from '../../assets/css/font_text.css';
-import {Link} from 'react-router-dom';
+// import '../../assets/css/stylesheet.css';
 import {parseJwt} from "../../services/auth";
 
 class Lancamento extends Component{
@@ -60,7 +58,12 @@ class Lancamento extends Component{
            tempDuracao: this.state.tempDuracao,
            dataLancamento: this.state.dataLancamento,
            sinopse: this.state.sinopse,
-           idPlataforma: this.state.idPlataforma})
+           idPlataforma: this.state.idPlataforma}, 
+            headers: {
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer' + localStorage.getItem('usuario-opflix')
+         })
     }
     
 
@@ -80,9 +83,11 @@ class Lancamento extends Component{
         return(
             <div>
                 <Nav/>
-                <h1 style={Fonte}>
-                    Lancamentos
+                <h1>
+                    Lançamentos
                 </h1>
+                {/* {(this.state.idTipoUsuario == 2 || this.state.idTipoUsuario == 1 || this.state.idTipoUsuario == 3) ? 
+                    ( */}
                 <thead>
                     <tr>
                         <th>Lançamento</th>
@@ -95,38 +100,36 @@ class Lancamento extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                {this.state.lista.map(element =>{
-                    return(
-                        <tr key={element.idLancamento}>
-                            <td style={Fonte}>{element.nome}</td>
-                            <td style={Fonte}>{element.idCategoria}</td>
-                            <td style={Fonte}>{element.idTipoMetragem}</td>
-                            <td style={Fonte}>{element.tempDuracao}</td>
-                            <td style={Fonte}>{element.dataLancamento}</td>
-                            <td style={Fonte}>{element.sinopse}</td>
-                            <td style={Fonte}>{element.idPlataforma}</td>
-                        </tr>
-                    )
-                })}
+                    {this.state.lista.map(element =>{
+                        return(
+                            <tr key={element.idLancamento}>
+                                <td>{element.nome}</td>
+                                <td>{element.idCategoria}</td>
+                                <td>{element.idTipoMetragem}</td>
+                                <td>{element.tempDuracao}</td>
+                                <td>{element.dataLancamento}</td>
+                                <td>{element.sinopse}</td>
+                                <td>{element.idPlataforma}</td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
-                    {(this.state.idTipoUsuario === 2) ? 
+                    // ) : ""}
+                    {(this.state.idTipoUsuario == 2) ? 
                         (
-                    <h4>
-                        <Link>
-                            Deseja cadastrar algum filme? Clique aqui!
-                        </Link>
-                    </h4>
-                        ) : ""}
-                <form onSubmit={this.Cadastrar}>
-                    <input className="" placeholder="Nome" onInput={this.stateNome} name="nome"/>
-                    <input className="" placeholder="Id da categoria" onInput={this.stateIdCategoria} name="nome"/>
-                    <input className="" placeholder="Id do tipo de metragem" onInput={this.stateIdTipoMetragem} name="nome"/>
-                    <input className="" placeholder="Tempo de duração" onInput={this.stateTempDuracao} name="nome"/>
-                    <input className="" placeholder="Data de lançamento" onInput={this.stateDataLancamento} name="nome"/>
-                    <input className="" type="textarea" placeholder="Sinopse" onInput={this.stateSinopse} name="nome"/>
-                    <input className="" placeholder="Id da plataforma" onInput={this.stateIdPlataforma} name="nome"/>
-                    <button>Cadastrar</button>
-                </form>
+                            <form onSubmit={this.Cadastrar}>
+                                <h3> Área de administrador para cadastro de lançamento </h3>
+                                <input className="" placeholder="Nome" onInput={this.stateNome} name="nome"/>
+                                <input className="" placeholder="Id da categoria" onInput={this.stateIdCategoria} name="nome"/>
+                                <input className="" placeholder="Id do tipo de metragem" onInput={this.stateIdTipoMetragem} name="nome"/>
+                                <input className="" placeholder="Tempo de duração" onInput={this.stateTempDuracao} name="nome"/>
+                                <input className="" placeholder="Data de lançamento" onInput={this.stateDataLancamento} name="nome"/>
+                                <input className="" type="textarea" placeholder="Sinopse" onInput={this.stateSinopse} name="nome"/>
+                                <input className="" placeholder="Id da plataforma" onInput={this.stateIdPlataforma} name="nome"/>
+                                <button>Cadastrar</button>
+                            </form>
+                        ) : ""
+                    }
             </div>
         );
     }
