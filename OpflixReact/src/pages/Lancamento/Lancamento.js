@@ -51,6 +51,7 @@ class Lancamento extends Component{
     
     
     Cadastrar = (event) => {
+        event.preventDefault();
        Axios.post("http://localhost:5000/api/lancamento/adminCad", {
            nome: this.state.nome,
            idCategoria: this.state.idCategoria,
@@ -58,12 +59,14 @@ class Lancamento extends Component{
            tempDuracao: this.state.tempDuracao,
            dataLancamento: this.state.dataLancamento,
            sinopse: this.state.sinopse,
-           idPlataforma: this.state.idPlataforma}, 
+           idPlataforma: this.state.idPlataforma},{
+            method: "POST", 
             headers: {
             'Content-Type' : 'application/json',
             'Accept' : 'application/json',
             'Authorization' : 'Bearer' + localStorage.getItem('usuario-opflix')
-         })
+         }
+        })
     }
     
 
@@ -100,6 +103,7 @@ class Lancamento extends Component{
                     </tr>
                 </thead>
                 <tbody>
+        
                     {this.state.lista.map(element =>{
                         return(
                             <tr key={element.idLancamento}>
@@ -114,8 +118,7 @@ class Lancamento extends Component{
                         )
                     })}
                 </tbody>
-                    // ) : ""}
-                    {(this.state.idTipoUsuario == 2) ? 
+                    {(this.state.idTipoUsuario === '2') ? 
                         (
                             <form onSubmit={this.Cadastrar}>
                                 <h3> Área de administrador para cadastro de lançamento </h3>
